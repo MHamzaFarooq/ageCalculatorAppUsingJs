@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Age Calculator</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="calculator">
+        <h1>
+          Age Calculator <br />
+          <span> using JavaScript</span>
+        </h1>
+        <div class="input-box">
+          <input type="date" id="date" />
+          <button onclick="calculateAge()">Calculate</button>
+        </div>
+        <div id="output"></div>
+      </div>
+    </div>
+
+    <script>
+      let userInput = document.getElementById("date");
+      userInput.max = new Date().toISOString().split("T")[0];
+
+      function calculateAge() {
+        let userInputValue = userInput.value;
+
+        let [y1, m1, d1] = userInputValue.split("-").map(Number);
+
+        let today = new Date();
+
+        let y2 = today.getFullYear();
+        let m2 = today.getMonth() + 1;
+        let d2 = today.getDate();
+
+        let y3 = y2 - y1;
+
+        let m3 = m2 - m1;
+
+        if (m3 < 0) {
+          y3--;
+          m3 = 12 + m3;
+        }
+
+        let d3 = d2 - d1;
+
+        if (d3 < 0) {
+          m3--;
+          let daysInLastMonth = new Date(y2, m2 - 1, 0).getDate();
+          d3 = daysInLastMonth + d3;
+        }
+
+        let outputElement = document.getElementById("output");
+        outputElement.textContent = `Age: ${y3} years, ${m3} months, ${d3} days`;
+      }
+
+      function getDaysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
+      }
+    </script>
+  </body>
+</html>
